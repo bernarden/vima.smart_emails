@@ -20,14 +20,14 @@ class DriveAttributeProvider:
 		attribute_files.sort()
 
 		if len(attribute_files) == 1:
-			return current_attributes_reading, current_attributes_reading, current_attributes_reading
+			return current_attributes_reading, None, None
 		elif len(attribute_files) == 2:
 			initial_attribute_reading = self.__get_attribute_readings_from_file(attribute_files[0])
-			return current_attributes_reading, initial_attribute_reading, initial_attribute_reading
+			return current_attributes_reading, None, initial_attribute_reading
 		else:
 			initial_attribute_reading = self.__get_attribute_readings_from_file(attribute_files[0])
 			previous_attribute_reading = self.__get_attribute_readings_from_file(attribute_files[-2])
-			return current_attributes_reading, initial_attribute_reading, previous_attribute_reading
+			return current_attributes_reading, previous_attribute_reading, initial_attribute_reading
 
 
 	def __get_current_attributes_reading(self, smartctl_drive_identifier: str) -> Run:

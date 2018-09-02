@@ -114,12 +114,13 @@ class EmailBodyGenerator:
 
 	@staticmethod
 	def __inline_css():
-		command = "npm install"
-		process = subprocess.Popen(
-			command.split(),
-			stdout=subprocess.PIPE,
-			cwd=Constants.instance().inlining_tool_dir)
-		process.communicate()
+		if not os.path.exists(os.path.join(Constants.instance().inlining_tool_dir, 'node_modules')):
+			command = "npm install"
+			process = subprocess.Popen(
+				command.split(),
+				stdout=subprocess.PIPE,
+				cwd=Constants.instance().inlining_tool_dir)
+			process.communicate()
 
 		command = "npm run-script build"
 		process = subprocess.Popen(
