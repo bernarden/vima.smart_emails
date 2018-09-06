@@ -36,15 +36,30 @@ class EmailBodyGenerator:
 	def __inject_email_content(template, smartctl_drive_identifier, date, info, header, rows):
 		template = template.replace("$DRIVE_PATH", smartctl_drive_identifier)
 		template = template.replace("$RUN_TIME", date.strftime("%d/%m/%Y %H:%M"))
-		template = template.replace("$MODEL_FAMILY", info.model_family)
-		template = template.replace("$DEVICE_MODEL", info.device_model)
-		template = template.replace("$SERIAL_NUMBER", info.serial_number)
-		template = template.replace("$CAPACITY", info.user_capacity)
+
+		if info.model_family != "N/A":
+			template = template.replace("$MODEL_FAMILY", info.model_family)
+		else:
+			template = template.replace("$MODEL_FAMILY", "")
+
+		if info.device_model != "N/A":
+			template = template.replace("$DEVICE_MODEL", info.device_model)
+		else:
+			template = template.replace("$DEVICE_MODEL", "")
+
+		if info.serial_number != "N/A":
+			template = template.replace("$SERIAL_NUMBER", info.serial_number)
+		else:
+			template = template.replace("$SERIAL_NUMBER", "")
+
+		if info.user_capacity != "N/A":
+			template = template.replace("$CAPACITY", info.user_capacity)
+		else:
+			template = template.replace("$CAPACITY", "")
 
 		template = template.replace("$ATTRIBUTES", header + rows)
 
 		return template
-
 
 	@staticmethod
 	def __store_email_to_file(email, drive_serial_number):
@@ -119,14 +134,14 @@ class EmailBodyGenerator:
 			process = subprocess.Popen(
 				command.split(),
 				stdout=subprocess.PIPE,
-				cwd=Constants.instance().inlining_tool_dir)
+				cwd=Constants.instance().inlining_tool_dir, shell=True)
 			process.communicate()
 
 		command = "npm run-script build"
 		process = subprocess.Popen(
 			command.split(),
 			stdout=subprocess.PIPE,
-			cwd=Constants.instance().inlining_tool_dir)
+			cwd=Constants.instance().inlining_tool_dir, shell=True)
 		process.communicate()
 
 	@staticmethod
