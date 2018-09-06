@@ -3,19 +3,18 @@ import subprocess
 from smart_emails.constants import Constants
 from smart_emails.domain.drive_info import DriveInfo
 
-
 class DriveInfoProvider:
 
 	def get_drive_info(self, smartctl_drive_identifier: str) -> DriveInfo:
-		drive_info_output = self.__run_command("sudo smartctl -i " + smartctl_drive_identifier)
+		drive_info_output = self.__run_command("smartctl -i " + smartctl_drive_identifier)
 
-		data = []
+		dictionary = {}
 		drive_info_output_lines = drive_info_output.decode("utf-8").split('\n')
 		for i, line in enumerate(drive_info_output_lines):
 			# disregard header information in file
 			if i > 3 and line.strip():
-				data.append(line[18:].strip())
-		drive_info = DriveInfo(data)
+				dictionary[line[:18].strip()] = line[18:].strip()
+		drive_info = DriveInfo(dictionary)
 
 		# Create drive folder if doesn't exist.
 		drive_directory = Constants.instance().drive_directory(drive_info.serial_number)

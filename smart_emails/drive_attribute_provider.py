@@ -32,7 +32,7 @@ class DriveAttributeProvider:
 
 	def __get_current_attributes_reading(self, smartctl_drive_identifier: str) -> Run:
 		timestamp = datetime.now()
-		output = self.__run_command("sudo smartctl --attributes " + smartctl_drive_identifier)
+		output = self.__run_command("smartctl --attributes " + smartctl_drive_identifier)
 
 		filename = timestamp.strftime(Constants.instance().attribute_file_name_format)
 		file_path = os.path.join(Constants.instance().drive_directory(self.drive_serial_number), filename)
