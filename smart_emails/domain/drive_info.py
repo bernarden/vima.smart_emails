@@ -1,22 +1,65 @@
 class DriveInfo:
-	def __init__(self, values):
-		self.model_family = values[0]
-		self.device_model = values[1]
-		self.serial_number = values[2]
-		self.lu_wwn_device_id = values[3]
-		self.firmware_version = values[4]
-		self.user_capacity = values[5]
-		self.sector_size = values[6]
-		self.rotation_rate = values[7]
-		self.device_is = values[8]
-		self.ata_version_is = values[9]
-		self.local_time_is = values[10]
-		self.smart_support_available = values[11]
-		self.smart_support_enabled = values[12]
+	def __init__(self, values: {}):
+		self.values = values
 
+	@property
+	def model_family(self) -> str:
+		return self.values.get('Model Family:', "N/A")
+
+	@property
+	def device_model(self) -> str:
+		return self.values.get('Device Model:', "N/A")
+
+	@property
+	def serial_number(self) -> str:
+		return self.values.get('Serial Number:', "N/A")
+
+	@property
+	def lu_wwn_device_id(self) -> str:
+		return self.values.get('LU WWN Device Id:', "N/A")
+	
+	@property
+	def firmware_version(self) -> str:
+		return self.values.get('Firmware Version:', "N/A")
+
+	@property
+	def user_capacity(self) -> str:
+		return self.values.get('User Capacity:', "N/A")
+
+	@property
+	def sector_size(self) -> str:
+		return self.values.get('Sector Size:', "N/A")
+
+	@property
+	def sector_sizes(self) -> str:
+		return self.values.get('Sector Sizes:', "N/A")
+
+	@property
+	def rotation_rate(self) -> str:
+		return self.values.get('Rotation Rate:', "N/A")
+
+	@property
+	def device_is(self) -> str:
+		return self.values.get('Device is:', "N/A")
+
+	@property
+	def ata_version_is(self) -> str:
+		return self.values.get('ATA Version is:', "N/A")
+
+	@property
+	def sata_version_is(self) -> str:
+		return self.values.get('SATA Version is:', "N/A")
+
+	@property
+	def local_time_is(self) -> str:
+		return self.values.get('Local Time is:', "N/A")
+
+	@property
+	def smart_support_enabled(self) -> str:
+		return self.values.get('Smart support is:', "N/A")
 
 	def __repr__(self):
-		return "INFO: \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s" % (self.model_family,
+		return "INFO: \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s" % (self.model_family,
 		self.device_model,
 		self.serial_number,
 		self.lu_wwn_device_id,
@@ -27,6 +70,5 @@ class DriveInfo:
 		self.device_is,
 		self.ata_version_is,
 		self.local_time_is,
-		self.smart_support_available,
 		self.smart_support_enabled)
 
