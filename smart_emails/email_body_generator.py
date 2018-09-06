@@ -6,6 +6,7 @@ from smart_emails.constants import Constants
 class EmailBodyGenerator:
 
 	def __init__(self):
+		self.info_columns = ["Model Family:", "Device Model:", "Serial Number:", "User Capacity:"]
 		self.column_names_current = ["id", "name", "value", "worst", "thresh", "raw_value"]
 		self.column_names = ["value", "worst", "thresh", "raw_value"]
 		self.int_columns = ["value", "worst", "thresh"]
@@ -14,10 +15,11 @@ class EmailBodyGenerator:
 	def generate(self, run_list, drive_info, smartctl_drive_identifier) -> str:
 		email_template = self.__get_email_template()
 
-		header = self.__generate_header()
-		rows = self.__generate_table_rows(run_list)
+		header = self.__generate_header_html()
+		rows = self.__generate_table_rows_html(run_list)
+		info = self.__generate_info_html(drive_info)
 		email = self.__inject_email_content(
-			email_template, smartctl_drive_identifier, run_list[0].date, drive_info, header, rows)
+			email_template, smartctl_drive_identifier, run_list[0].date, info, header, rows)
 
 		self.__store_email_to_file(email, drive_info.serial_number)
 		self.__inline_css()
@@ -37,25 +39,7 @@ class EmailBodyGenerator:
 		template = template.replace("$DRIVE_PATH", smartctl_drive_identifier)
 		template = template.replace("$RUN_TIME", date.strftime("%d/%m/%Y %H:%M"))
 
-		if info.model_family != "N/A":
-			template = template.replace("$MODEL_FAMILY", info.model_family)
-		else:
-			template = template.replace("$MODEL_FAMILY", "")
-
-		if info.device_model != "N/A":
-			template = template.replace("$DEVICE_MODEL", info.device_model)
-		else:
-			template = template.replace("$DEVICE_MODEL", "")
-
-		if info.serial_number != "N/A":
-			template = template.replace("$SERIAL_NUMBER", info.serial_number)
-		else:
-			template = template.replace("$SERIAL_NUMBER", "")
-
-		if info.user_capacity != "N/A":
-			template = template.replace("$CAPACITY", info.user_capacity)
-		else:
-			template = template.replace("$CAPACITY", "")
+		template = template.replace("$INFO", info)
 
 		template = template.replace("$ATTRIBUTES", header + rows)
 
@@ -67,8 +51,19 @@ class EmailBodyGenerator:
 		with open(file, "w+") as f:
 			f.write(email)
 
+	def __generate_info_html(self, drive_info):
+		info = ""
+		for i in self.info_columns:
+			if drive_info.values.get(i) is None:
+				continue
 
-	def __generate_header(self):
+			info += "<div class=\"info-section__info-row\">"
+			info += "\n<div class=\"info-section__info-row--name\">" + i + "</div>"
+			info += "\n<div class=\"info-section__info-row--value\">" + drive_info.values.get(i) + "</div>"
+			info += "\n</div>"
+		return info
+
+	def __generate_header_html(self):
 		header = "<tr class=\"attributes-table__headers-row\">"
 		for i in self.column_names_current:
 			header += "\n<th>" + i.upper() + "</th>"
@@ -76,7 +71,7 @@ class EmailBodyGenerator:
 		return header
 
 
-	def __generate_table_rows(self, run_list):
+	def __generate_table_rows_html(self, run_list):
 		table_rows = ""
 
 		number_rows = len(run_list[0].attributes)
