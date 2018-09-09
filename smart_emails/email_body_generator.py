@@ -127,16 +127,18 @@ class EmailBodyGenerator:
 		if not os.path.exists(os.path.join(Constants.instance().inlining_tool_dir, 'node_modules')):
 			command = "npm install"
 			process = subprocess.Popen(
-				command.split(),
+				command,
 				stdout=subprocess.PIPE,
-				cwd=Constants.instance().inlining_tool_dir, shell=True)
+				cwd=Constants.instance().inlining_tool_dir, 
+				shell=True)
 			process.communicate()
 
 		command = "npm run-script build"
 		process = subprocess.Popen(
-			command.split(),
+			command,
 			stdout=subprocess.PIPE,
-			cwd=Constants.instance().inlining_tool_dir, shell=True)
+			cwd=Constants.instance().inlining_tool_dir, 
+			shell=True)
 		process.communicate()
 
 	@staticmethod
