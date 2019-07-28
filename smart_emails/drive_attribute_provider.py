@@ -1,16 +1,15 @@
 import os
-import subprocess
 from datetime import datetime
 from smart_emails.domain.run import Run
 from smart_emails.constants import Constants
 from smart_emails.domain.attribute import Attribute
+from smart_emails.helpers.commandRunner import CommandRunner
 
 
 class DriveAttributeProvider:
 
 	def __init__(self, drive_serial_number: str):
 		self.drive_serial_number = drive_serial_number
-
 
 	def get_current_previous_and_initial_runs(self, smartctl_drive_identifier: str) -> (Run, Run, Run):
 		current_attributes_reading = self.__get_current_attributes_reading(smartctl_drive_identifier)
@@ -29,10 +28,9 @@ class DriveAttributeProvider:
 			previous_attribute_reading = self.__get_attribute_readings_from_file(attribute_files[-2])
 			return current_attributes_reading, previous_attribute_reading, initial_attribute_reading
 
-
 	def __get_current_attributes_reading(self, smartctl_drive_identifier: str) -> Run:
 		timestamp = datetime.now()
-		output = self.__run_command("smartctl --attributes " + smartctl_drive_identifier)
+		output = CommandRunner.run_command("smartctl", "--attributes " + smartctl_drive_identifier, True)
 
 		filename = timestamp.strftime(Constants.instance().attribute_file_name_format)
 		file_path = os.path.join(Constants.instance().drive_directory(self.drive_serial_number), filename)
@@ -40,7 +38,6 @@ class DriveAttributeProvider:
 			f.write(output)
 
 		return self.__get_attribute_readings_from_file(filename)
-
 
 	def __get_attribute_readings_from_file(self, file_name: str) -> Run:
 		attribute_file_path = os.path.join(Constants.instance().drive_directory(self.drive_serial_number), file_name)
@@ -53,7 +50,6 @@ class DriveAttributeProvider:
 					attributes.append(Attribute(self.__extract_attribute_values(line)))
 		return Run(attributes, run_time)
 
-
 	# String split method that handles whitespace in last column (Min/Max X)
 	@staticmethod
 	def __extract_attribute_values(line: str):
@@ -64,11 +60,3 @@ class DriveAttributeProvider:
 			values[9] += " " + values[10]
 			values.pop(10)
 		return values
-
-
-	@staticmethod
-	def __run_command(command: str) -> bytes:
-		process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
-		(output, err) = process.communicate()
-		# TODO - VU: Handle errors.
-		return output
