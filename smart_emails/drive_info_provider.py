@@ -1,12 +1,13 @@
 import os
-import subprocess
 from smart_emails.constants import Constants
 from smart_emails.domain.drive_info import DriveInfo
+from smart_emails.helpers.commandRunner import CommandRunner
+
 
 class DriveInfoProvider:
 
 	def get_drive_info(self, smartctl_drive_identifier: str) -> DriveInfo:
-		drive_info_output = self.__run_command("smartctl -i " + smartctl_drive_identifier)
+		drive_info_output = CommandRunner.run_command("smartctl", "-i " + smartctl_drive_identifier, True)
 
 		dictionary = {}
 		drive_info_output_lines = drive_info_output.decode("utf-8").split('\n')
@@ -26,12 +27,4 @@ class DriveInfoProvider:
 		with open(drive_info_file_path, "w+") as f:
 			for line in drive_info_output_lines:
 				f.writelines(line + '\n')
-
 		return drive_info
-
-	@staticmethod
-	def __run_command(command: str) -> bytes:
-		process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
-		(output, err) = process.communicate()
-		# TODO - VU: Handle errors.
-		return output
