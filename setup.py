@@ -6,7 +6,7 @@ requires = [
 
 setup(
     name='smart_emails',
-    version='',
+    version='1.0.0',
     packages=['smart_emails'],
     url='',
     license='',
