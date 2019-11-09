@@ -1,5 +1,5 @@
 import os
-from .helpers.singleton import Singleton
+from smart_emails.helpers.singleton import Singleton
 
 
 @Singleton
