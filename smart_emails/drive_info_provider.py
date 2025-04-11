@@ -14,10 +14,11 @@ class DriveInfoProvider:
 		for i, line in enumerate(drive_info_output_lines):
 			# disregard header information in file
 			if i > 3 and line.strip():
-				dictionary[line[:18].strip()] = line[18:].strip()
+				key, value = line.split(':', 1)
+				dictionary[key.strip()] = value.strip()
 		drive_info = DriveInfo(dictionary)
 
-		# Create drive folder if doesn't exist.
+		# Create drive folder if it doesn't exist.
 		drive_directory = Constants.instance().drive_directory(drive_info.serial_number)
 		if not os.path.exists(drive_directory):
 			os.mkdir(drive_directory)
