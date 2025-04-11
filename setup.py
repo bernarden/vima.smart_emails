@@ -1,7 +1,7 @@
 from setuptools import setup
 
 requires = [
-    'premailer>=3.6.0'
+    'premailer>=3.10.0'
 ]
 
 setup(
@@ -10,9 +10,9 @@ setup(
     packages=['smart_emails'],
     url='',
     license='',
-    author='Megan Ganley',
+    author='Vima',
     author_email='',
     description='',
-    python_requires=">=3.6",
+    python_requires=">=3.11",
     install_requires=requires
 )
