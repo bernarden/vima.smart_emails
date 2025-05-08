@@ -64,7 +64,7 @@ class DriveInfo:
 
 	@property
 	def smart_support_enabled(self) -> str:
-		return self.values.get('Smart support is', "N/A")
+		return self.values.get('SMART support is', "N/A")
 
 	def __repr__(self):
 		return "INFO: \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s \n%s" % (
