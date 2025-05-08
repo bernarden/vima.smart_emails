@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=80.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smart_emails"
+version = "1.0.0"
+description = "Tool to retrieve and email SMART attributes"
+authors = [{ name = "VIMA" }]
+license = { text = "" }
+requires-python = ">=3.11"
+dependencies = [
+    "premailer>=3.10.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
+    "coverage>=7.8.0",
+    "black>=25.1.0",
+    "flake8>=7.2.0",
+    "mypy>=1.15.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["smart_emails"]
