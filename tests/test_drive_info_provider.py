@@ -5,7 +5,8 @@ from unittest.mock import patch
 
 from smart_emails.constants import Constants
 from smart_emails.drive_info_provider import DriveInfoProvider
-from tests.fixtures import SMARTCTL_SEAGATE_IRONWOLF_HDD, SMARTCTL_TOSHIBA_HDD, SMARTCTL_SAMSUNG_NVME
+from tests.fixtures import SMARTCTL_SEAGATE_IRONWOLF_HDD, SMARTCTL_TOSHIBA_HDD, SMARTCTL_SAMSUNG_NVME, \
+	SMARTCTL_UNKNOWN_NVME
 
 
 class TestDriveInfoProvider:
@@ -111,4 +112,29 @@ class TestDriveInfoProvider:
 		assert drive_info.nvme_version == "2.0"
 		assert drive_info.sata_version_is == "N/A"
 		assert drive_info.local_time_is == "Thu May 08 00:00:00 2025 NZST"
+		assert drive_info.smart_support_enabled == "N/A"
+
+	def test_unknown_nvme_drive_info_mapped_correctly(self):
+		# Arrange
+		self.arrange_test(SMARTCTL_UNKNOWN_NVME)
+
+		# Act
+		drive_info = DriveInfoProvider().get_drive_info("/dev/sda")
+
+		# Assert
+		assert drive_info.model_family == "N/A"
+		assert drive_info.device_model == "N/A"
+		assert drive_info.model_number == "ABC012D3(EF)"
+		assert drive_info.serial_number == "AB000000000000001234"
+		assert drive_info.firmware_version == "AB01234"
+		assert drive_info.user_capacity == "N/A"
+		assert drive_info.total_nvm_capacity == "512,110,190,592 [512 GB]"
+		assert drive_info.sector_size == "N/A"
+		assert drive_info.sector_sizes == "N/A"
+		assert drive_info.rotation_rate == "N/A"
+		assert drive_info.device_is == "N/A"
+		assert drive_info.ata_version_is == "N/A"
+		assert drive_info.nvme_version == "1.4"
+		assert drive_info.sata_version_is == "N/A"
+		assert drive_info.local_time_is == "Fri May  9 18:00:00 2025 NZST"
 		assert drive_info.smart_support_enabled == "N/A"

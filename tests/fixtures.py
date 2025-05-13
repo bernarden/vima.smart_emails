@@ -67,3 +67,24 @@ Namespace 1 IEEE EUI-64:            002538 433142ed9e
 Local Time is:                      Thu May 08 00:00:00 2025 NZST
 
 """
+
+SMARTCTL_UNKNOWN_NVME = b"""smartctl 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-9-pve] (local build)
+Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
+
+=== START OF INFORMATION SECTION ===
+Model Number:                       ABC012D3(EF)
+Serial Number:                      AB000000000000001234
+Firmware Version:                   AB01234
+PCI Vendor/Subsystem ID:            0x1a2b
+IEEE OUI Identifier:                0x000000
+Total NVM Capacity:                 512,110,190,592 [512 GB]
+Unallocated NVM Capacity:           0
+Controller ID:                      0
+NVMe Version:                       1.4
+Number of Namespaces:               1
+Namespace 1 Size/Capacity:          512,110,190,592 [512 GB]
+Namespace 1 Formatted LBA Size:     512
+Namespace 1 IEEE EUI-64:            000000 0000001791
+Local Time is:                      Fri May  9 18:00:00 2025 NZST
+
+"""
