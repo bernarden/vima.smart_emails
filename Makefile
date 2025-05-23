@@ -4,7 +4,7 @@ install:
 	pip install -e .[dev]
 
 test:
-	pytest --cov=smart_emails --cov-report=term-missing tests/
+	PYTHONPATH=. pytest --cov=smart_emails --cov-report=term-missing tests/
 
 lint:
 	flake8 smart_emails tests
