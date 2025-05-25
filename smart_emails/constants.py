@@ -11,7 +11,7 @@ class Constants:
 		self.attribute_file_name_format = 'SmartAttributes_%Y_%m_%d_%H_%M_%S.txt'
 		self.info_file_name = 'info.txt'
 		self.config_file_name = "config.ini"
-		self.email_template_relative_file_path = "html/smart-notification-template.html"
+		self.email_template_relative_file_path = "html/smart_notification_template.html"
 
 	@property
 	def config_file_path(self) -> str:
@@ -34,9 +34,9 @@ class Constants:
 	def uninlined_email_file_path(self, drive_serial_number: str) -> str:
 		return os.path.join(
 			self.package_directory,
-			"html/smart-notification_" + drive_serial_number + ".html")
+			"html/smart_notification_" + drive_serial_number + ".html")
 
 	def inlined_email_file_path(self, drive_serial_number: str) -> str:
 		return os.path.join(
 			self.package_directory,
-			"html/smart-notification_" + drive_serial_number + "-inlined.html")
+			"html/smart_notification_" + drive_serial_number + "_inlined.html")

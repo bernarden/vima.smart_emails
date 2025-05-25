@@ -1,7 +1,8 @@
 import os
+
 from smart_emails.constants import Constants
 from smart_emails.domain.drive_info import DriveInfo
-from smart_emails.helpers.commandRunner import CommandRunner
+from smart_emails.helpers.command_runner import CommandRunner
 
 
 class DriveInfoProvider:

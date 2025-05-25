@@ -3,7 +3,7 @@ from datetime import datetime
 
 from smart_emails.constants import Constants
 from smart_emails.domain.run import Run
-from smart_emails.helpers.commandRunner import CommandRunner
+from smart_emails.helpers.command_runner import CommandRunner
 from smart_emails.helpers.drive_attribute_file_reader import DriveAttributeFileReader
 
 

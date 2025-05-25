@@ -20,7 +20,7 @@ class TestDriveInfoProvider:
 		expected_file_path = os.path.join(tmpdir.name, "drive_info_file.txt")
 		mock_constants.return_value.drive_info_file_path = lambda s: expected_file_path
 		stack.enter_context(patch(
-			"smart_emails.helpers.commandRunner.CommandRunner.run_command",
+			"smart_emails.helpers.command_runner.CommandRunner.run_command",
 			return_value=smartctl_output))
 
 		return expected_file_path
