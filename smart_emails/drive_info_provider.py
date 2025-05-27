@@ -7,7 +7,8 @@ from smart_emails.helpers.command_runner import CommandRunner
 
 class DriveInfoProvider:
 
-	def get_drive_info(self, smartctl_drive_identifier: str) -> DriveInfo:
+	@staticmethod
+	def get_drive_info(smartctl_drive_identifier: str) -> DriveInfo:
 		drive_info_output = CommandRunner.run_command("smartctl", "-i " + smartctl_drive_identifier, True)
 
 		dictionary = {}

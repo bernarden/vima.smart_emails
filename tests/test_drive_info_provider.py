@@ -5,7 +5,8 @@ from unittest.mock import patch
 
 from smart_emails.constants import Constants
 from smart_emails.drive_info_provider import DriveInfoProvider
-from tests.drive_info_fixtures import SMARTCTL_SEAGATE_IRONWOLF_HDD, SMARTCTL_TOSHIBA_HDD, SMARTCTL_SAMSUNG_NVME, \
+from tests.fixtures.drive_info_fixtures import SMARTCTL_SEAGATE_IRONWOLF_HDD, SMARTCTL_TOSHIBA_HDD, \
+	SMARTCTL_SAMSUNG_NVME, \
 	SMARTCTL_UNKNOWN_NVME
 
 

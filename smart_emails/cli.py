@@ -12,9 +12,9 @@ def main() -> None:
 	process_runtime_variables()
 	create_history_folder()
 	smartctl_drive_identifier = get_drive_identifier()
-	drive_info = DriveInfoProvider().get_drive_info(smartctl_drive_identifier)
-	current_previous_and_initial_runs = DriveAttributeProvider(
-		drive_info.serial_number).get_current_previous_and_initial_runs(smartctl_drive_identifier)
+	drive_info = DriveInfoProvider.get_drive_info(smartctl_drive_identifier)
+	current_previous_and_initial_runs = DriveAttributeProvider.get_current_previous_and_initial_runs(
+		smartctl_drive_identifier, drive_info.serial_number)
 	email_body = EmailBodyGenerator().generate(current_previous_and_initial_runs, drive_info, smartctl_drive_identifier)
 	EmailSender.send_html_email("SmartCheck results for " + smartctl_drive_identifier, email_body)
 

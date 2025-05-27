@@ -7,7 +7,7 @@ from unittest.mock import patch
 from smart_emails.constants import Constants
 from smart_emails.domain.run import Run
 from smart_emails.helpers.drive_attribute_file_reader import DriveAttributeFileReader
-from tests.drive_attributes_fixtures import SMARTCTL_HHD1_ATTRIBUTES_SCAN1
+from tests.fixtures.drive_attributes_fixtures import SMARTCTL_HHD1_ATTRIBUTES_SCAN1
 
 
 class TestDriveAttributeFileReader:
