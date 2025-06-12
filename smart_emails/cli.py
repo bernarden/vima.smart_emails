@@ -1,36 +1,32 @@
-import os
 import sys
 
-from smart_emails.constants import Constants
-from smart_emails.drive_attribute_provider import DriveAttributeProvider
-from smart_emails.drive_info_provider import DriveInfoProvider
-from smart_emails.email_body_generator import EmailBodyGenerator
-from smart_emails.email_sender import EmailSender
+from smart_emails.drive_data.drive_attribute_file_reader import DriveAttributeFileReader
+from smart_emails.drive_data.drive_attribute_file_writer import DriveAttributeFileWriter
+from smart_emails.drive_data.drive_attribute_provider import DriveAttributeProvider
+from smart_emails.drive_data.drive_info_provider import DriveInfoProvider
+from smart_emails.email.email_body_generator import EmailBodyGenerator
+from smart_emails.email.email_sender import EmailSender
+from smart_emails.helpers.settings import Settings
 
 
 def main() -> None:
-	process_runtime_variables()
-	create_history_folder()
-	smartctl_drive_identifier = get_drive_identifier()
-	drive_info = DriveInfoProvider.get_drive_info(smartctl_drive_identifier)
-	current_previous_and_initial_runs = DriveAttributeProvider.get_current_previous_and_initial_runs(
-		smartctl_drive_identifier, drive_info.serial_number)
-	email_body = EmailBodyGenerator().generate(current_previous_and_initial_runs, drive_info, smartctl_drive_identifier)
-	EmailSender.send_html_email("SmartCheck results for " + smartctl_drive_identifier, email_body)
+	# Dependencies
+	drive_identifier = sys.argv[1:][0]
+	settings = Settings(drive_identifier)
+	drive_info_provider = DriveInfoProvider(settings)
+	drive_attribute_file_writer = DriveAttributeFileWriter(settings)
+	drive_attribute_file_reader = DriveAttributeFileReader(settings)
+	drive_attribute_provider = DriveAttributeProvider(
+		drive_attribute_file_writer, drive_attribute_file_reader, settings)
+	email_body_generator = EmailBodyGenerator(settings)
+	email_sender = EmailSender(settings)
 
-
-def get_drive_identifier() -> str:
-	arguments: [] = sys.argv[1:]
-	return arguments[0]
-
-
-def create_history_folder() -> None:
-	if not os.path.exists(Constants.instance().history_directory):
-		os.mkdir(Constants.instance().history_directory)
-
-
-def process_runtime_variables() -> None:
-	Constants.instance().package_directory = os.path.dirname(os.path.abspath(__file__))
+	# Execution
+	settings.initialise()
+	drive_info = drive_info_provider.get_drive_info()
+	current_previous_and_initial_runs = drive_attribute_provider.get_current_previous_and_initial_runs()
+	email_body = email_body_generator.generate(current_previous_and_initial_runs, drive_info)
+	email_sender.send_html_email("SMART attributes for " + settings.drive_serial_number, email_body)
 
 
 if __name__ == '__main__':

@@ -1,17 +1,18 @@
 import os
 from datetime import datetime
 
-from smart_emails.constants import Constants
 from smart_emails.domain.attribute import Attribute
 from smart_emails.domain.run import Run
+from smart_emails.helpers.settings import Settings
 
 
 class DriveAttributeFileReader:
+	def __init__(self, settings: Settings):
+		self.settings = settings
 
-	@staticmethod
-	def get_attribute_readings_from_file(drive_serial_number: str, file_name: str) -> Run:
-		attribute_file_path = os.path.join(Constants.instance().drive_directory(drive_serial_number), file_name)
-		run_time = datetime.strptime(file_name, Constants.instance().attribute_file_name_format)
+	def get_attribute_readings_from_file(self, file_name: str) -> Run:
+		attribute_file_path = os.path.join(self.settings.drive_directory_path, file_name)
+		run_time = datetime.strptime(file_name, self.settings.attribute_file_name_format)
 		attributes = []
 		with open(attribute_file_path, "r") as f:
 			for i, line in enumerate(f):

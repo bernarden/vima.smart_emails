@@ -1,3 +1,5 @@
+import os
+
 SMARTCTL_HHD1_ATTRIBUTES_SCAN1: bytes = b"""smartctl 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-9-pve] (local build)
 Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
 
@@ -80,7 +82,7 @@ ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_
 198 Offline_Uncorrectable   0x0008   100   100   000    Old_age   Offline      -       0
 199 UDMA_CRC_Error_Count    0x000a   100   100   000    Old_age   Always       -       0
 
-"""
+""".replace(b"\n", os.linesep.encode('utf-8'))
 
 SMARTCTL_HHD2_ATTRIBUTES_SCAN1: bytes = b"""smartctl 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-9-pve] (local build)
 Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
@@ -112,7 +114,7 @@ ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_
 241 Total_LBAs_Written      0x0000   100   253   000    Old_age   Offline      -       57460727660
 242 Total_LBAs_Read         0x0000   100   253   000    Old_age   Offline      -       598694369133
 
-"""
+""".replace(b"\n", os.linesep.encode('utf-8'))
 
 SMARTCTL_HHD2_ATTRIBUTES_SCAN2: bytes = b"""smartctl 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-10-pve] (local build)
 Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
@@ -144,7 +146,7 @@ ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_
 241 Total_LBAs_Written      0x0000   100   253   000    Old_age   Offline      -       57662249124
 242 Total_LBAs_Read         0x0000   100   253   000    Old_age   Offline      -       617143440379
 
-"""
+""".replace(b"\n", os.linesep.encode('utf-8'))
 
 SMARTCTL_HHD2_ATTRIBUTES_SCAN3: bytes = b"""smartctl 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-9-pve] (local build)
 Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
@@ -176,4 +178,4 @@ ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_
 241 Total_LBAs_Written      0x0000   100   253   000    Old_age   Offline      -       57553430308
 242 Total_LBAs_Read         0x0000   100   253   000    Old_age   Offline      -       609342591200
 
-"""
+""".replace(b"\n", os.linesep.encode('utf-8'))

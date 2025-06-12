@@ -1,3 +1,5 @@
+import os
+
 SMARTCTL_SEAGATE_IRONWOLF_HDD: bytes = b"""smartctl 7.3 2022-02-28 r5338 [x86_64-linux-6.5.11-7-pve] (local build)
 Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
 
@@ -20,7 +22,7 @@ SMART support is: Enabled
 
 
 
-"""
+""".replace(b"\n", os.linesep.encode('utf-8'))
 
 SMARTCTL_TOSHIBA_HDD: bytes = b"""smartctl 7.1 2019-12-30 r5022 [x86_64-linux-5.4.44-1-pve] (local build)
 Copyright (C) 2002-19, Bruce Allen, Christian Franke, www.smartmontools.org
@@ -44,7 +46,7 @@ SMART support is: Enabled
 
 
 
-"""
+""".replace(b"\n", os.linesep.encode('utf-8'))
 
 SMARTCTL_SAMSUNG_NVME: bytes = b"""smartctl 7.4 2023-08-01 r5530 [x86_64-w64-mingw32-w11-b26100] (sf-7.4-1)
 Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
@@ -66,7 +68,7 @@ Namespace 1 Formatted LBA Size:     512
 Namespace 1 IEEE EUI-64:            002538 433142ed9e
 Local Time is:                      Thu May 08 00:00:00 2025 NZST
 
-"""
+""".replace(b"\n", os.linesep.encode('utf-8'))
 
 SMARTCTL_UNKNOWN_NVME: bytes = b"""smartctl 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-9-pve] (local build)
 Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
@@ -87,4 +89,4 @@ Namespace 1 Formatted LBA Size:     512
 Namespace 1 IEEE EUI-64:            000000 0000001791
 Local Time is:                      Fri May  9 18:00:00 2025 NZST
 
-"""
+""".replace(b"\n", os.linesep.encode('utf-8'))
